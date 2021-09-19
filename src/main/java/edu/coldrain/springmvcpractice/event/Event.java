@@ -1,4 +1,4 @@
-package edu.coldrain.springmvcpractice;
+package edu.coldrain.springmvcpractice.event;
 
 import lombok.*;
 
