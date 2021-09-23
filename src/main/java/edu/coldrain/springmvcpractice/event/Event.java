@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 @Builder @NoArgsConstructor @AllArgsConstructor
 public class Event {
 
+    private Long id;
+
     private String name;
 
     private int limitOfEnrollment;
