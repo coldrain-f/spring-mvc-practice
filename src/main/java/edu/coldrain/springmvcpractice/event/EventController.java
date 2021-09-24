@@ -63,4 +63,17 @@ public class EventController {
     public String putEvents(@PathVariable int id) {
         return "events/" + id;
     }
+
+    @PostMapping("/events/param")
+    @ResponseBody
+    public Event postParam(@RequestParam Long id, @RequestParam String name) {
+        // @RequestParam 은 기본이 required=true 로 설정되어 있어서
+        // 값이 반드시 넘어와야 한다.
+        // 그리고 넘어온 기본타입 값은 매개변수 타입에 맞게 자동으로 변환이 된다.
+        // @RequestParam 을 생략하면 붙은것과 같고 required 는 false 이다. (테스트 예정)
+        // 넘어오는 key 와 매개변의 이름이 같으면 바인딩되고
+        // 같지 않다면 기본적으로 바인딩 되지 않기때문에 name 속성으로 넘어오는 key 와 같게 해줘야 한다.
+        // defaultValue 로 값이 넘어오지 않았을 경우 기본값을 설정할 수 있다. (defaultValue 를 설정하면 required=false 와 같음)
+        return Event.builder().id(id).name(name).build();
+    }
 }

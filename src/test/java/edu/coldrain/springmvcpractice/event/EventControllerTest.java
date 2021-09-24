@@ -104,4 +104,29 @@ public class EventControllerTest {
                 .andExpect(content().string("success"))
                 .andDo(print());
     }
+
+    @Test
+    public void postParam() throws Exception {
+        //쿼리파라미터로 전송
+        //post 방식도 쿼리 파라미터로 값을 보낼 수 있다.
+        mockMvc.perform(post("/events/param?id=1&name=스프링 웹 MVC 스터디 1차"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value("1"))
+                .andExpect(jsonPath("name").value("스프링 웹 MVC 스터디 1차"))
+                .andDo(print());
+    }
+
+    @Test
+    public void postParam2() throws Exception {
+        // form 방식으로 값을 전송할 수도 있다.
+        mockMvc.perform(post("/events/param")
+                        .param("id", "2")
+                        .param("name", "스프링 웹 MVC 스터디 2차"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value("2"))
+                .andExpect(jsonPath("name").value("스프링 웹 MVC 스터디 2차"));
+    }
+
+
+
 }
