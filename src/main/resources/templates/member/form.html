@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new member</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/members}" method="post" th:object="${member}">
+    <!-- title 속성은 input 태그가 label 을 제공하지 못할 때 대신 사용할 수 있다. -->
+    <!-- th:field 는 id, name, value 를 만들어준다. -->
+    <input type="text" title="id" th:field="*{id}" readonly="readonly"/>
+    <input type="text" title="name" th:field="*{name}"/>
+    <input type="text" title="age" th:field="*{age}"/>
+    <input type="text" title="mobile" th:field="*{mobile}"/>
+    <input type="submit" value="Create"/>
+</form>
+
+</body>
+</html>
