@@ -55,4 +55,25 @@ public class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    public void bindingErrorMembers () throws Exception {
+        // 핸들러에 BindingResult 가 있으므로 바인딩이 실패해도 400번 에러가 발생하지 않고
+        // 정상적으로 200 상태코드가 응답에 담긴다.
+        mockMvc.perform(post("/members")
+                        .param("age", "aaa"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void validMembers() throws Exception {
+        // 핸들러에 @Valid 애노테이션이 붙어있고 Member 모델에 @Min(1) 이 설정되어 있어서
+        // age 에 -1을 바인딩 하면 bindingResult 에 에러로 담긴다.
+        // @Valid 이외에도 @Validated 를 사용해도 된다.
+        mockMvc.perform(post("/members")
+                        .param("age", "-1"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }
