@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Event</title>
+</head>
+<body>
+<form th:object="${event}" th:action="@{/events/new}" action="#" method="post">
+    <p th:errors="*{name}">name error</p>
+    <p th:errors="*{limitOfEnrollment}">limitOfEnrollment error</p>
+    <input type="text" title="name" th:field="*{name}" placeholder="event name" />
+    <input type="text" title="limitOfEnrollment" th:field="*{limitOfEnrollment}" placeholder="event limit" />
+    <input type="submit" value="Create event" />
+</form>
+</body>
+</html>

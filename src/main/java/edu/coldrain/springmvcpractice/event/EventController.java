@@ -7,7 +7,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -75,5 +80,31 @@ public class EventController {
         // 같지 않다면 기본적으로 바인딩 되지 않기때문에 name 속성으로 넘어오는 key 와 같게 해줘야 한다.
         // defaultValue 로 값이 넘어오지 않았을 경우 기본값을 설정할 수 있다. (defaultValue 를 설정하면 required=false 와 같음)
         return Event.builder().id(id).name(name).build();
+    }
+
+    @GetMapping("/events/form")
+    public String eventsForm(Model model) {
+        model.addAttribute("event", new Event());
+        return "events/eventsForm";
+    }
+
+    @PostMapping("/events/new")
+    public String createEvent(@Validated @ModelAttribute Event event, BindingResult bindingResult) {
+
+        //값을 잘못 입력했다면 값을 유지한채 다시 입력폼으로 돌려보낸다.
+        if (bindingResult.hasErrors()) {
+            return "events/eventsForm";
+        }
+
+        //정상 값이라면 저장소에 이벤트를 저장했다고 가정하고 목록을 보여준다.
+        return "redirect:/events/list";
+    }
+
+    @GetMapping("/events/list")
+    public String listEvent(Model model) {
+        //저장소에서 이벤트 목록을 가져온다고 가정
+        final List<Event> eventList = eventService.getEvents();
+        model.addAttribute("eventList", eventList);
+        return "events/list";
     }
 }
